@@ -1,0 +1,6 @@
+1) c
+2) b
+3) a
+4) a (Haskell report)
+5) a (What about Word though)
+
