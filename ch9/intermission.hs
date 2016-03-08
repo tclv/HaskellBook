@@ -21,3 +21,12 @@ myCube = [y^3 | y <- [1..5]]
 
 len = length [(x,y) | (x, y) <- zip mySqr myCube, x < 50 && y < 50]
 
+
+-- normal form
+-- 1 1
+-- 2 2
+-- 3 3
+-- 4 3
+-- 5 3
+-- 6 3
+-- 7 2
