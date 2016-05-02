@@ -105,3 +105,11 @@ instance (Num a, Ord a) => TooMany (a, a) where
   
 -- 1 |BigSmall| = 2
 -- 2 |NumberOrBool| = 2 + |Int8| = 258
+
+-- Unique inhabitants from all possible implementations
+-- 1 4 + 4 = 8
+-- 2 4 * 4 = 16
+-- 3 4 ^ 4 = 256
+-- 4 4 * 4 * 4 = 64
+-- 5 (2 ^ 2) ^ 2 = 16
+-- 6 (4 ^ 4) ^ 2 = 65536
