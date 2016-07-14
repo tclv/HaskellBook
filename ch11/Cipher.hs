@@ -1,4 +1,4 @@
-module Cipher where
+module Cipher (caesar, unCaesar, vignere, unVignere) where
 
 import Data.Char
 
@@ -11,6 +11,11 @@ shiftChar shift x
   | ord x + shift < ord 'A' = shiftChar (shift + 26) x
   | otherwise               = chr $ ord x + shift
 
+caesar :: Int -> String -> String
+caesar shift code = map (shiftChar shift) code
+
+unCaesar :: Int -> String -> String
+unCaesar shift code = map (shiftChar $ negate shift) code
 
 vignere :: Keyphrase -> String -> String
 vignere key inp = map (uncurry shiftChar) encodeAmounts
@@ -26,8 +31,8 @@ shiftAmounts key@(x:xs) (y:ys)
   | isAsciiUpper y = (ord x - ord 'A', y) : shiftAmounts xs ys
   | otherwise      = (0, y) : shiftAmounts key ys
 
-unvignere :: Keyphrase -> String -> String
-unvignere key code = map (uncurry shiftChar) negShiftAmounts
+unVignere :: Keyphrase -> String -> String
+unVignere key code = map (uncurry shiftChar) negShiftAmounts
   where
     upperCode              = map toUpper code
     upperKey               = map toUpper key
