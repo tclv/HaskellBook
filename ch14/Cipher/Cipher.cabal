@@ -1,0 +1,36 @@
+name:                Cipher
+version:             0.1.0.0
+synopsis:            Initial project template from stack
+description:         Please see README.md
+homepage:            https://github.com/githubuser/Cipher#readme
+license:             BSD3
+license-file:        LICENSE
+author:              Author Dorus Leliveld
+maintainer:          example@example.com
+copyright:           2016 Dorus Leliveld
+build-type:          Simple
+-- extra-source-files:
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Cipher
+  build-depends:       base >= 4.7 && < 5
+  default-language:    Haskell2010
+
+executable Cipher
+  hs-source-dirs:      app
+  main-is:             Main.hs
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  build-depends:       base
+                     , Cipher
+  default-language:    Haskell2010
+
+test-suite tests
+  hs-source-dirs:      tests
+  main-is:             CipherTests.hs
+  ghc-options:         -Wall -fwarn-tabs
+  build-depends:       base
+                     , QuickCheck
+                     , Cipher
+  type:                exitcode-stdio-1.0

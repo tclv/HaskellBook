@@ -1,0 +1,33 @@
+name:                arithmetic
+version:             0.1.0.0
+synopsis:            Initial project template from stack
+description:         Please see README.md
+license:             BSD3
+license-file:        LICENSE
+author:              Dorus Leliveld
+maintainer:          dorusleliveld@gmail.com
+copyright:           2016 Dorus Leliveld
+category:            Education
+build-type:          Simple
+-- extra-source-files:
+cabal-version:       >=1.10
+
+library 
+  hs-source-dirs:      src
+  exposed-modules:     Arithmetic
+  ghc-options:         -Wall -fwarn-tabs
+  build-depends:       base
+  default-language:    Haskell2010
+
+
+
+test-suite tests
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      tests
+  main-is:             ArithmeticTests.hs
+  build-depends:       base
+                     , arithmetic
+                     , QuickCheck
+  ghc-options:         -Wall -fwarn-tabs 
+  default-language:    Haskell2010
+

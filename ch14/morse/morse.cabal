@@ -1,0 +1,42 @@
+name:                morse
+version:             0.1.0.0
+license:             BSD3
+license-file:        LICENSE
+author:              Dorus Leliveld
+maintainer:          dorusleliveld@gmail.com
+copyright:           2016 Dorus Leliveld
+category:            Education
+build-type:          Simple
+-- extra-source-files:
+cabal-version:       >=1.10
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Morse
+  ghc-options:         -Wall -fwarn-tabs
+  build-depends:       base >= 4.7 && < 5
+                     , containers
+                     , QuickCheck
+  default-language:    Haskell2010
+
+executable morse
+  hs-source-dirs:      src
+  main-is:             Main.hs
+  ghc-options:         -Wall -fwarn-tabs
+  build-depends:       base >= 4.7 && < 5
+                     , morse
+                     , containers
+                     , QuickCheck
+  default-language:    Haskell2010
+
+test-suite tests
+  ghc-options:         -Wall -fno-warn-orphans
+  type:                exitcode-stdio-1.0
+  main-is:             tests.hs
+  hs-source-dirs:      tests
+  build-depends:       base
+                     , containers
+                     , morse
+                     , QuickCheck
+  default-language:    Haskell2010
+

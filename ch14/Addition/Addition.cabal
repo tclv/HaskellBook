@@ -1,0 +1,21 @@
+name:                Addition
+version:             0.1.0.0
+synopsis:            Simple project template from stack
+description:         Please see README.md
+license:             BSD3
+license-file:        LICENSE
+author:              Dorus Leliveld
+maintainer:          dorusleliveld@gmail.com
+copyright:           2016 Dorus Leliveld
+category:            Education
+build-type:          Simple
+cabal-version:       >=1.10
+
+library
+  exposed-modules:     Addition
+  ghc-options:         -Wall -fwarn-tabs
+  build-depends:       base >= 4.7 && < 5
+                     , hspec
+                     , QuickCheck
+  hs-source-dirs:      .
+  default-language:    Haskell2010
