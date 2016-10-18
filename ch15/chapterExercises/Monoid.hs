@@ -56,10 +56,6 @@ main = do
   quickCheck (monoidLeftIdentity         :: LeftIdentity BoolDisj)
   quickCheck (monoidRightIdentity        :: RightIdentity BoolDisj)
 
-  quickCheck (semigroupAssoc             :: Associativity BoolDisj)
-  quickCheck (monoidLeftIdentity         :: LeftIdentity BoolDisj)
-  quickCheck (monoidRightIdentity        :: RightIdentity BoolDisj)
-
   quickCheck (semigroupCombineAssoc      :: FunctionAssociativity (Combine String String) String)
   quickCheck (monoidLeftIdentityCombine  :: FunctionIdentity (Combine String String) String)
   quickCheck (monoidRightIdentityCombine :: FunctionIdentity (Combine String String) String)

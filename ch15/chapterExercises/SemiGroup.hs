@@ -5,7 +5,7 @@ module SG where
 
 import Data.Semigroup
 import Test.QuickCheck hiding (Success, Failure)
-import Text.Show.Functions
+import Text.Show.Functions ()
 
 type Associativity x = x -> x -> x -> Bool
 type FunctionAssociativity x c = x -> x -> x -> c -> Bool
@@ -75,9 +75,7 @@ instance (Arbitrary a,
           Arbitrary c,
           Arbitrary d) => Arbitrary (Four a b c d) where
   arbitrary = do
-    x <- arbitrary
-    y <- arbitrary
-    z <- arbitrary
+    Three x y z <- arbitrary
     w <- arbitrary
     return $ Four x y z w
 
@@ -111,7 +109,7 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Or a b) where
     oneof $ map return [Fst x, Snd y]
 
 instance Semigroup (Or a b) where
-  Fst a <> z = z
+  Fst _ <> z = z
   Snd a <> _ = Snd a
   
 newtype Combine a b =
@@ -123,13 +121,13 @@ instance (CoArbitrary a, Arbitrary b) => Arbitrary (Combine a b) where
     return $ Combine a 
 
 instance (Semigroup b) => Semigroup (Combine a b) where
-  (Combine f) <> (Combine g) = Combine $ \x -> f x <> g x
+  (Combine f) <> (Combine g) = Combine $ \ x -> f x <> g x
 
 instance Show (Combine a b) where
   show (Combine f) = "Combine " ++ show f
 
 newtype Comp a =
-  Comp { unComp :: (a -> a) }
+  Comp { unComp :: a -> a }
 
 instance (CoArbitrary a, Arbitrary a) => Arbitrary (Comp a) where
   arbitrary = do
@@ -154,19 +152,19 @@ instance (Arbitrary a, Arbitrary b) => Arbitrary (Validation a b) where
 
 instance Semigroup a => Semigroup (Validation a b) where
   Failure x <> Failure y = Failure $ x <> y
-  Failure x <> Success y = Failure x
-  Success x <> y = y
+  Failure x <> Success _ = Failure x
+  Success _ <> y = y
   
 newtype AccumulateRight a b =
   AccumulateRight (Validation a b)
   deriving (Eq, Show, Arbitrary)
 
 instance Semigroup b => Semigroup (AccumulateRight a b) where
-  AccumulateRight x <> AccumulateRight x' = 
+  AccumulateRight acc <> AccumulateRight acc' = 
     let res = 
-          case (x, x') of
+          case (acc, acc') of
                 (Success x, Success y) -> Success $ x <> y
-                (Success x, Failure y) -> Failure y
+                (Success _, Failure y) -> Failure y
                 (Failure x, _)         -> Failure x
              in AccumulateRight res
 
@@ -175,9 +173,9 @@ newtype AccumulateBoth a b =
   deriving (Eq, Show, Arbitrary)
 
 instance (Semigroup a, Semigroup b) => Semigroup (AccumulateBoth a b) where
-  AccumulateBoth x <> AccumulateBoth x' = 
+  AccumulateBoth acc <> AccumulateBoth acc' = 
     let res = 
-          case (x, x') of
+          case (acc, acc') of
                 (Success x, Success y) -> Success $ x <> y
                 (Failure x, Failure y) -> Failure $ x <> y
                 (Failure x, _)         -> Failure x
