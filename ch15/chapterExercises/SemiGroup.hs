@@ -5,6 +5,7 @@ module SG where
 
 import Data.Semigroup
 import Test.QuickCheck hiding (Success, Failure)
+import Test.QuickCheck.Function
 import Text.Show.Functions ()
 
 type Associativity x = x -> x -> x -> Bool
@@ -117,8 +118,10 @@ newtype Combine a b =
 
 instance (CoArbitrary a, Arbitrary b) => Arbitrary (Combine a b) where
   arbitrary = do
-    a <- arbitrary
-    return $ Combine a 
+    f <- arbitrary
+    return $ Combine f
+
+a x = fmap ((flip ($) x ). unCombine) $ generate (arbitrary :: Gen (Combine Int Int))
 
 instance (Semigroup b) => Semigroup (Combine a b) where
   (Combine f) <> (Combine g) = Combine $ \ x -> f x <> g x
