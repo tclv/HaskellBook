@@ -26,12 +26,12 @@ intToDie n =
     x -> error $ "intToDie got non 1-6 integer: " ++ show x
 
 rollDieThreeTimes :: (Die, Die, Die)
-rollDieThreeTimes = do
+rollDieThreeTimes =
   let s = mkStdGen 0
       (d1, s1) = randomR (1, 6) s
       (d2, s2) = randomR (1, 6) s1
       (d3, _)  = randomR (1, 6) s2
-  (intToDie d1, intToDie d2, intToDie d3)
+   in (intToDie d1, intToDie d2, intToDie d3)
 
 rollDie :: State StdGen Die
 rollDie = state $ do
@@ -45,9 +45,12 @@ rollDieThreeTimes' :: State StdGen (Die, Die, Die)
 rollDieThreeTimes' =
   liftA3 (,,) rollDie' rollDie' rollDie'
 
+
+-- Repeats a single value
 infiniteDie :: State StdGen [Die]
 infiniteDie = repeat <$> rollDie
 
+-- What you actually want
 nDie :: Int -> State StdGen [Die]
 nDie n = replicateM n rollDie
 
